@@ -68,4 +68,15 @@ public class UserService {
                 "data",user
         );
     }
+
+    public Map<String, Object> getUserByRole(User.Role role) {
+        User user = (User) userRepository.findByRole(role)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return Map.of(
+                "status",HttpStatus.FOUND.value(),
+                "success","getUserByRole retrieved successfully",
+                "data",user
+        );
+    }
 }

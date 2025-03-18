@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/query/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -57,6 +57,16 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getUserByEmail(@RequestParam String email) {
         try {
             Map<String, Object> response = userService.getUserByEmail(email);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(Map.of("message", "User not found", "error", e.getMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/getByRole")
+    public ResponseEntity<Map<String, Object>> getUserByRole(@RequestParam User.Role role) {
+        try {
+            Map<String, Object> response = userService.getUserByRole(role);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(Map.of("message", "User not found", "error", e.getMessage()), HttpStatus.NOT_FOUND);

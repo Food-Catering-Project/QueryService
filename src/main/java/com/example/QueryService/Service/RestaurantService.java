@@ -38,6 +38,7 @@ public class RestaurantService {
         );
     }
 
+
     public Map<String, Object> getRestaurantsByStatus(Restaurant.Status status) {
 
         List<Restaurant> restaurants = restaurantRepository.findByStatus(status);
